@@ -8,3 +8,11 @@ services:
       context: ./requirements/nginx
     ports:
       - "443:443"
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+    env_file:
+      - .env
