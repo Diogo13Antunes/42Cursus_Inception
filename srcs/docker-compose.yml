@@ -1,18 +1,46 @@
-version: '3.8'
-
 services:
-  nginx:
-    image: nginx
-    container_name: nginx
+  42_nginx:
+    image: 42_nginx
+    container_name: 42_nginx
     build:
       context: ./requirements/nginx
+    volumes:
+      - 42_nginx-data:/var/www/html/
+    networks:
+      - 42_Inception_Network
     ports:
       - "443:443"
+    restart: on-failure
 
-  mariadb:
-    image: mariadb
-    container_name: mariadb
+  42_mariadb:
+    image: 42_mariadb
+    container_name: 42_mariadb
     build:
       context: ./requirements/mariadb
+    volumes:
+      - 42_mariadb-data:/var/lib/mysql
+    networks:
+      - 42_Inception_Network
     env_file:
       - .env
+    restart: on-failure
+
+volumes:
+  42_mariadb-data:
+    name: 42_mariadb-data
+    driver_opts:
+      type: none
+      device: ${VOLUMES_DATA}/data/mysql
+      o: bind
+  
+  42_nginx-data:
+    name: 42_nginx-data
+    driver_opts:
+      type: none
+      device: ${VOLUMES_DATA}/data/wordpress
+      o: bind
+
+networks:
+  42_Inception_Network:
+    name: 42_Inception_Network
+    driver: bridge
