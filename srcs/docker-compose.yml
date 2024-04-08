@@ -2,6 +2,8 @@ services:
   42_nginx:
     image: 42_nginx
     container_name: 42_nginx
+    depends_on:
+      - 42_wordpress
     build:
       context: ./requirements/nginx
     volumes:
@@ -25,6 +27,21 @@ services:
       - .env
     restart: on-failure
 
+  42_wordpress:
+    image: 42_wordpress
+    container_name: 42_wordpress
+    depends_on:
+      - 42_mariadb
+    build:
+      context: ./requirements/wordpress
+    volumes:
+      - 42_nginx-data:/var/www/html/
+    networks:
+      - 42_Inception_Network
+    env_file:
+      - .env
+    restart: on-failure
+
 volumes:
   42_mariadb-data:
     name: 42_mariadb-data
@@ -32,7 +49,7 @@ volumes:
       type: none
       device: ${VOLUMES_DATA}/data/mysql
       o: bind
-  
+
   42_nginx-data:
     name: 42_nginx-data
     driver_opts:

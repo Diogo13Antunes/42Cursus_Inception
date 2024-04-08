@@ -46,10 +46,10 @@ info:
 
 # Entrar no modo interativo de cada container
 mariadb-it:
-	$(DOCKER) exec -it $(MARIADB) /bin/bash
+	$(DOCKER) exec -it $(MARIADB) /bin/zsh
 
 nginx-it:
-	$(DOCKER) exec -it $(NGINX) /bin/bash
+	$(DOCKER) exec -it $(NGINX) /bin/zsh
 
 wordpress-it:
-	$(DOCKER) exec -it $(WORDPRESS) /bin/bash
+	$(DOCKER) exec -it $(WORDPRESS) /bin/zsh

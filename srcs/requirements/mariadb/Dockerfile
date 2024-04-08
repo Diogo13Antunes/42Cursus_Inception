@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:oldstable
 
 RUN apt-get update
 RUN apt-get install -y mariadb-server
@@ -10,7 +10,7 @@ RUN apt-get install -y wget
 RUN rm -rf /var/lib/apt/lists/*
 RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O /tmp/install.sh
 RUN chmod +x /tmp/install.sh
-RUN /tmp/install.sh --unattended
+RUN /tmp/install.sh -y
 RUN rm /tmp/install.sh
 
 COPY ./tools/42_mariadb_configs.sh /home
